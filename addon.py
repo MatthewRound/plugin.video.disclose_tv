@@ -19,6 +19,7 @@
 
 from xbmcswift2 import Plugin
 from resources.lib.scraper import Scraper
+import SimpleDownloader as downloader
 
 STRINGS = {
     'page': 30001
@@ -26,6 +27,7 @@ STRINGS = {
 
 plugin = Plugin()
 scraper = Scraper()
+downloader = downloader.SimpleDownloader()
 
 
 @plugin.route('/')
@@ -94,6 +96,11 @@ def __format_videos(videos):
             'video': {'duration': video['duration']}
         },
         'is_playable': True,
+        'replace_context_menu': True,
+        'context_menu': [(
+            _('download video'), 
+            'XBMC.RunPlugin(%s)' % plugin.url_for('download_video', video_id=video['id'], video_title=video['title']),
+        )],
         'path': plugin.url_for(
             endpoint='play_video',
             video_id=video['id']
@@ -108,6 +115,16 @@ def _(string_id):
     else:
         plugin.log.warning('String is missing: %s' % string_id)
         return string_id
+
+
+@plugin.route('/download_video/<video_id>/<video_title>')
+def download_video(video_id, video_title):
+    clean_title = "".join(i for i in video_title if i not in "\/[](){}':!*?<>|")
+    video_url = scraper.get_video_url(video_id)
+    path = plugin.get_setting('download_path')
+    filename = "%s.flv" % clean_title
+    params = { "url": video_url, "download_path": path, "Title": clean_title}
+    downloader.download(filename, params)
 
 
 def log(text):
