@@ -20,6 +20,8 @@
 from xbmcswift2 import Plugin
 from resources.lib.scraper import Scraper
 import SimpleDownloader as downloader
+import xbmc
+
 
 STRINGS = {
     'page': 30001
@@ -41,7 +43,30 @@ def show_topics():
             page='1'
         )
     } for topic in topics]
+    items.insert(0, {
+        'label': 'Search',
+        'path' : plugin.url_for(
+            endpoint='search_videos_prompt'
+        )
+    })
     return plugin.finish(items)
+
+
+
+@plugin.route('/searchprompt')
+def search_videos_prompt():
+    searchString = ''
+    keyboard = xbmc.Keyboard('search disclose tv')
+    keyboard.doModal()
+    if (keyboard.isConfirmed()):
+        searchString = keyboard.getText()
+        log('searchString %s' % searchString)
+        videos = scraper.do_search(searchString)
+        items = __format_videos(videos)
+        return plugin.finish(items)
+
+
+
 
 
 @plugin.route('/videos/<topic_id>/<page>/')

@@ -32,6 +32,31 @@ MAIN_URL = 'http://www.disclose.tv/'
 
 class Scraper:
 
+
+    def do_search(self, searchString):
+        videos = []
+#        path = 'search/desktop?title=' + searchString + '&type=video&categoriesopt=0&channelsopt=0'
+#        url = MAIN_URL + path
+#        tree = self.__get_tree(url)
+#        resultTable = tree.find('div', {'class': 'gsc-expansionArea'})
+#        log(resultTable)
+#        for tr in resultTable.findAll('tr'):
+#            #TODO figure how to get this
+#            duration = 100
+#            a = tr.find('a')
+#            title = a['href'].split('/')[4]
+#            id = a['href'].split('/')[3]
+#            videos.append({
+#                'thumbnail': self.__img(tr.find('img')['src']),
+#                'id': id,
+#                'path': a['href'],
+#                'title':title,
+#                'duration':duration
+#            })
+# TODO FIX THIS 
+        return videos
+
+
     def get_video_topics(self):
         log('get_video_topics started')
         path = 'action/videolist/page/1/all/filter/'
@@ -45,6 +70,7 @@ class Scraper:
                 'id': li.a['href'].split('/')[5]
             })
         return topics
+        
 
     def get_videos(self, topic_id, page):
         log('get_videos_by_topic_id started with topic_id=%s' % topic_id)
