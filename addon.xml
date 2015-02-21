@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.disclose_tv" name="Disclose.tv" version="0.1.0" provider-name="Tristan Fischer (sphere@dersphere.de)">
+<addon id="plugin.video.disclose_tv" name="Disclose.tv (download)" version="0.1.0d" provider-name="Tristan Fischer (sphere@dersphere.de)">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.simple.downloader" version="1.9.5"/>
@@ -14,9 +14,9 @@
     <language></language>
     <platform>all</platform>
     <website>http://www.disclose.tv/</website>
-    <source>https://github.com/dersphere/plugin.video.disclose_tv</source>
+    <source>https://github.com/MatthewRound/plugin.video.disclose_tv</source>
     <forum>http://forum.xbmc.org/showthread.php?tid=147831</forum>
-    <email>sphere@dersphere.de</email>
+    <email>roundyz32@gmail.com</email>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <summary lang="ar">لقد كُشِفَت الحقيقه</summary>
     <summary lang="be">TRUTH REVEALED</summary>

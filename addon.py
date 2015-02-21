@@ -122,6 +122,8 @@ def download_video(video_id, video_title):
     clean_title = "".join(i for i in video_title if i not in "\/[](){}':!*?<>|")
     video_url = scraper.get_video_url(video_id)
     path = plugin.get_setting('download_path')
+    if path == 'NOTSET':
+        path = xbmc.translatePath("special://temp")
     filename = "%s.flv" % clean_title
     params = { "url": video_url, "download_path": path, "Title": clean_title}
     downloader.download(filename, params)
