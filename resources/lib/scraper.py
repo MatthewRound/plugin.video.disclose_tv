@@ -105,7 +105,7 @@ class Scraper:
         data = self.__get_url(url)
         match = re.search(r"'(http://.*\.(flv|mp4|webm))'", data)
         if match:
-            return match.group(1)
+            return match.group(1).replace('http://', 'https://')
 
 
     @staticmethod
