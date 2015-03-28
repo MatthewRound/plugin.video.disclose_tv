@@ -82,6 +82,7 @@ class Scraper:
         videos = []
         for li in div.findAll('li'):
             a = li.find('a')
+            img = a.find('img')['data-src']
             title = a['title']
             video_id, path = a['href'].split('/')[3:5]
             span_content = li.find('span', {'class': 'types typeV'}).contents
@@ -93,7 +94,7 @@ class Scraper:
                 duration = ''
             videos.append({
                 'id': video_id,
-                'thumbnail': self.__img(li.find('img')['src']),
+                'thumbnail': self.__img(img),
                 'path': path,
                 'title': title,
                 'duration': self.__secs_from_duration(duration)
