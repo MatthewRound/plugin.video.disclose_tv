@@ -19,17 +19,18 @@
 
 from xbmcswift2 import Plugin
 from resources.lib.scraper import Scraper
-import SimpleDownloader as downloader
+from SimpleDownloader import DialogDownloadProgress
 import xbmc
+import urllib2
 
 
 STRINGS = {
-    'page': 30001
+    'page': 30001,
+    'download video': 30002
 }
 
 plugin = Plugin()
 scraper = Scraper()
-downloader = downloader.SimpleDownloader()
 
 
 @plugin.route('/')
@@ -56,11 +57,11 @@ def show_topics():
 @plugin.route('/searchprompt')
 def search_videos_prompt():
     searchString = ''
-    keyboard = xbmc.Keyboard('search disclose tv')
+    keyboard = xbmc.Keyboard('')
     keyboard.doModal()
     if (keyboard.isConfirmed()):
         searchString = keyboard.getText()
-        log('searchString %s' % searchString)
+        #log('searchString %s' % searchString)
         videos = scraper.do_search(searchString)
         items = __format_videos(videos)
         return plugin.finish(items)
@@ -149,9 +150,27 @@ def download_video(video_id, video_title):
     path = plugin.get_setting('download_path')
     if path == 'NOTSET':
         path = xbmc.translatePath("special://temp")
-    filename = "%s.flv" % clean_title
-    params = { "url": video_url, "download_path": path, "Title": clean_title}
-    downloader.download(filename, params)
+    filename = video_url.split('/')[-1]
+    saveLocation = path + filename
+    dialog = DialogDownloadProgress.DownloadProgress()
+    u = urllib2.urlopen(video_url)
+    meta = u.info()
+    file_size = int(meta.getheaders("Content-Length")[0])
+    dialog.create('Downloading', "%s Bytes: %s" % (filename, file_size))
+    f = open(saveLocation, 'wb')
+    block_sz = 8192
+    file_size_dl = 0
+    while True:
+        buffer = u.read(block_sz)
+        if not buffer:
+            dialog.close()
+            break
+        file_size_dl += len(buffer)
+        f.write(buffer)
+        status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+        status = status + chr(8)*(len(status)+1)
+        dialog.update(0, clean_title, status)
+    f.close()
 
 
 def log(text):

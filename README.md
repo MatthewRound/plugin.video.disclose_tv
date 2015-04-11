@@ -1,6 +1,6 @@
 # plugin.video.disclose_tv download
 
-Same as fork except for download functionality 
+Same as fork except for download and search functionality 
 all credits to original author
 **use at own risk**
 
