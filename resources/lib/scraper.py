@@ -89,7 +89,7 @@ class Scraper:
         for li in div.findAll('li'):
             a = li.find('a')
             img = a.find('img')['data-src']
-            title = a['title']
+            title = a['title'].encode('ascii','xmlcharrefreplace')
             video_id, path = a['href'].split('/')[3:5]
             span_content = li.find('span', {'class': 'types typeV'}).contents
             if len(span_content) == 1:
