@@ -9,6 +9,7 @@
     <string id="30002">Download video</string>
 
     <!-- Settings -->
-    <string id="30100">Force ViewMode "Thumbnail"</string>
+    <string id="30100">Force ViewMode</string>
+    <string id="30101">ViewMode Number from MyVideoNav.xml (50 = list, 51 wide list)</string>
     <string id="30200">Download Folder</string>
 </strings>

@@ -100,7 +100,7 @@ def show_videos(topic_id, page):
         'update_listing': 'update' in plugin.request.args
     }
     if plugin.get_setting('force_viewmode') == 'true':
-        finish_kwargs['view_mode'] = 'thumbnail'
+        finish_kwargs['view_mode'] = plugin.get_setting('viewmode_id')
     return plugin.finish(items, **finish_kwargs)
 
 

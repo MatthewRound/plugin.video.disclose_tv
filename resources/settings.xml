@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <setting id="force_viewmode" type="bool" label="30100" default="true"/>
+    <setting id="viewmode_id" type="number" label="30101" default="51"/>
     <setting id="download_path" type="folder" label="30200" default="NOTSET"/>
 </settings>
