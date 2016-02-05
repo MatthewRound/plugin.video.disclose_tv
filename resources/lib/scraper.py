@@ -112,9 +112,13 @@ class Scraper:
     def get_video_url(self, video_id):
         url = MAIN_URL + 'embed/%s?rayzzId=%s&width=300&height=170&flash=11&url=&utm_source=&utm_medium=Embed' % (video_id, video_id)
         data = self.__get_url(url)
+	#log(data)
         match = re.search(r"(http(s)://video*.*\.(flv|mp4|webm))", data)
         if match:
-            return match.group(1).replace('http://', 'https://')
+	    innerUrl = match.group(1).replace('http://', 'https://')
+	    realUrl = innerUrl.split('=\'')[1]
+	    #log('AA' + aa)
+            return realUrl
 
 
     @staticmethod
@@ -141,11 +145,11 @@ class Scraper:
         return BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES)
 
     def __get_url(self, url):
-        #log('__get_url opening url: %s' % url)
+        log('__get_url opening url: %s' % url)
         response = urlopen(url).read()
         #log('__get_url got %d bytes' % len(response))
         return response
 
 
 def log(text):
-    print u'Scraper: %s' % text
+    print u' ****DEBUGScraper*****: %s' % text
